@@ -1,4 +1,7 @@
 ---
+# pre upgrade settings:
+oc_dns_server: 192.168.122.1
+# set-repo settings:
 target_upgrade_version: mitaka
 delorean_hash: current-passed-ci
 repos:

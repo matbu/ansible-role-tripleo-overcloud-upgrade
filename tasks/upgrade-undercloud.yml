@@ -1,0 +1,6 @@
+---
+- name: Execute yum update on the undercloud
+  yum: name=* state=latest
+
+- name: Upgrade the undercloud
+  shell: openstack undercloud install &> upgrade_undercloud.log

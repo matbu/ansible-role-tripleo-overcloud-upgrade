@@ -1,0 +1,6 @@
+---
+- name: Update overcloud dns server
+  lineinfile:
+    regexp: "nameserver"
+    line: "nameserver {{ oc_dns_server }}"
+    dest: "/etc/resolv.conf"
