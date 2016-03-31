@@ -1,38 +1,60 @@
-Role Name
-=========
+Ansible-role-tripleo-overcloud-upgrade
+======================================
 
 A brief description of the role goes here.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role can be used on top of an existing Overcloud deployment.
+You just need to provide the required inventory file (see tests/ for more
+details).
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Here is the default parameters for overcloud upgrade role:
+
+# pre upgrade settings:
+oc_dns_server: 192.168.122.1
+# set-repo settings:
+target_upgrade_version: mitaka
+delorean_hash: current-passed-ci
+repos:
+  - delorean.repo
+  - delorean-deps.repo
+yum_repo_path: /etc/yum.repos.d/
+# Url of the delorean repos:
+repos_url:
+  - http://trunk.rdoproject.org/centos7-{{ target_upgrade_version }}/{{ delorean_hash | default('current-passed-ci')}}/delorean.repo
+  - http://trunk.rdoproject.org/centos7-{{ target_upgrade_version }}/delorean-deps.repo
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Depends on:
+Tripleo-quickstart:
+https://github.com/redhat-openstack/tripleo-quickstart.git
+Ansible-role-tripleo-overcloud:
+https://github.com/redhat-openstack/ansible-role-tripleo-overcloud.git
+
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+- name:  Upgrade overcloud
+  hosts: undercloud
+  gather_facts: no
+  sudo: yes
+  roles:
+    - ansible-role-tripleo-overcloud-upgrade
 
 License
 -------
 
-BSD
+Apache
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+mbultel@redhat.com
