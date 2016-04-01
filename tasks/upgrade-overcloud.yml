@@ -3,12 +3,13 @@
   file: path={{ upgrade_working_dir }}/{{ tht_dir }} state=absent
 
 - name: Copy new Tht directory to the upgrade working dir
+  sudo: yes
+  sudo_user: "{{ undercloud_upgrade_user }}"
   shell: >
       cp -R /usr/share/openstack-tripleo-heat-templates \
       {{ upgrade_working_dir }}/{{ tht_dir }};
 
 - name: Add the no ssh finger print checking into upgrade-non-controller.sh
-  sudo: yes
   shell: >
       sed -i 's/ssh/ssh -o StrictHostKeyChecking=no/' \
       {{ upgrade_non_controller_script }}
@@ -17,9 +18,13 @@
   template:
     src: "{{ upgrade_script }}"
     dest: "{{ upgrade_working_dir }}/overcloud-upgrade.sh"
-    mode: 0744
+    mode: 0755
+    owner: "{{ undercloud_upgrade_user }}"
+    group: "{{ undercloud_upgrade_user }}"
 
 - name: Upgrade the overcloud
-  shell: |
-    {{ upgrade_working_dir }}/overcloud-upgrade.sh > {{ upgrade_log }} 2>&1
+  sudo: yes
+  sudo_user: "{{ undercloud_upgrade_user }}"
+  shell: >
+      {{ upgrade_working_dir }}/overcloud-upgrade.sh > {{ upgrade_log }} 2>&1
   when: step_upgrade_overcloud

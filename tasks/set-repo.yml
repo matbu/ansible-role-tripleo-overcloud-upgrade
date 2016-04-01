@@ -3,7 +3,7 @@
   file: path=/etc/yum.repos.d/{{ item }} state=absent
   with_items: "{{ repos }}"
 
-- name: Template script to setup repos
+- name: Get delorean repo
   get_url: url={{ item }} dest={{ yum_repo_path }}
   with_items: "{{ repos_url }}"
 

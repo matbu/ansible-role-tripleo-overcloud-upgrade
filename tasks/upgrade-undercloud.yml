@@ -3,6 +3,8 @@
   yum: name=* state=latest
 
 - name: Upgrade the undercloud
+  sudo: yes
+  sudo_user: "{{ undercloud_upgrade_user }}"
   shell: openstack undercloud install &> upgrade_undercloud.log
   when: step_upgrade_undercloud
   notify:
