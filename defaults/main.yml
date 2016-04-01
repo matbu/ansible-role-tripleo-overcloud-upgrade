@@ -12,3 +12,14 @@ yum_repo_path: /etc/yum.repos.d/
 repos_url:
   - http://trunk.rdoproject.org/centos7-{{ target_upgrade_version }}/{{ delorean_hash | default('current-passed-ci')}}/delorean.repo
   - http://trunk.rdoproject.org/centos7-{{ target_upgrade_version }}/delorean-deps.repo
+# upgrade settings:
+upgrade_working_dir: /home/stack
+tht_dir: tripleo-heat-templates
+upgrade_script: upgrade-controller-liberty.sh.j2
+upgrade_non_controller_script: /bin/upgrade-non-controller.sh
+upgrade_log: upgrade_console.log
+
+# upgrade steps:
+step_upgrade_set_repo: true
+step_upgrade_undercloud: true
+step_upgrade_overcloud: true

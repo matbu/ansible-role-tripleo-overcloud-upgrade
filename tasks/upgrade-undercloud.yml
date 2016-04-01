@@ -4,3 +4,6 @@
 
 - name: Upgrade the undercloud
   shell: openstack undercloud install &> upgrade_undercloud.log
+  when: step_upgrade_undercloud
+  notify:
+    - restart openstack services
