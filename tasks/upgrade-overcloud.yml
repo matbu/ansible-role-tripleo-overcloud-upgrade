@@ -8,7 +8,6 @@
       {{ upgrade_working_dir }}/{{ tht_dir }};
 
 - name: Add the no ssh finger print checking into upgrade-non-controller.sh
-  sudo: yes
   shell: >
       sed -i 's/ssh/ssh -o StrictHostKeyChecking=no/' \
       {{ upgrade_non_controller_script }}
@@ -17,9 +16,9 @@
   template:
     src: "{{ upgrade_script }}"
     dest: "{{ upgrade_working_dir }}/overcloud-upgrade.sh"
-    mode: 0744
+    mode: 0755
 
 - name: Upgrade the overcloud
-  shell: |
-    {{ upgrade_working_dir }}/overcloud-upgrade.sh > {{ upgrade_log }} 2>&1
+  shell: >
+      {{ upgrade_working_dir }}/overcloud-upgrade.sh > {{ upgrade_log }} 2>&1
   when: step_upgrade_overcloud

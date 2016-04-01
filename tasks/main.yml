@@ -4,14 +4,17 @@
     - upgrade-pre-tasks
 
 - include: set-repo.yml
+  when: step_upgrade_set_repo
   tags:
     - upgrade-repo
 
 - include: upgrade-undercloud.yml
+  when: step_upgrade_set_repo
   tags:
     - upgrade-undercloud
 
 - include: upgrade-overcloud.yml
+  when: step_upgrade_set_repo
   tags:
     - upgrade-overcloud
 

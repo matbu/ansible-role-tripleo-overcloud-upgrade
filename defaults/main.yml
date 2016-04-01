@@ -18,8 +18,10 @@ tht_dir: tripleo-heat-templates
 upgrade_script: upgrade-controller-liberty.sh.j2
 upgrade_non_controller_script: /bin/upgrade-non-controller.sh
 upgrade_log: upgrade_console.log
+undercloud_upgrade_user: stack
 
 # upgrade steps:
+step_pre_upgrade: false
 step_upgrade_set_repo: true
 step_upgrade_undercloud: true
 step_upgrade_overcloud: true

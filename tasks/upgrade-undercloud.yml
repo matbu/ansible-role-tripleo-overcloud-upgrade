@@ -1,5 +1,6 @@
 ---
 - name: Execute yum update on the undercloud
+  sudo: yes
   yum: name=* state=latest
 
 - name: Upgrade the undercloud
